@@ -1,0 +1,6 @@
+endpointName,primary_key1,primary_key2,has_version
+constants/Articles,id,,1
+PurchaseHistory,pKey,,1
+constants/CustomerGroups,customerGroupId,,1
+constants/CustomerGroupRelations,customerId,customerGroupId,1
+constants/Customers,customerId,,1
