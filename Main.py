@@ -3,14 +3,13 @@ from Configuration import Configuration
 from Fetch import Fetch
 from Parser import Parser
 from Writer import Writer
+from GUI import GUI
 from DatabaseCreator.SQLITE_Creator import CSVtoSQLite
 from DatabaseCreator.POSTGRES_Creator import CSVtoSQL
 import argparse
-import pandas
-
 
 def run_with_guid():
-    pass
+    application: GUI = GUI(logger, fetcher, parser, writer)
 
 
 def run_headless():
@@ -57,13 +56,12 @@ def run_headless():
 
 if __name__ == '__main__': 
     logger :Logger = Logger()
-    config :Configuration = Configuration()
+    config :Configuration = Configuration(logger)
     fetcher :Fetch = Fetch(logger=logger, config=config)
     writer :Writer = Writer(logger=logger, config=config)
     parser :Parser = Parser(logger=logger, config=config)
 
     length = len(config.Endpoints)
-    
     
     argparser = argparse.ArgumentParser(description="GUI or Headlessmode default is with GUI")
     

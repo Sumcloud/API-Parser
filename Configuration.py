@@ -18,33 +18,36 @@ class Configuration:
         self.POSTGRES : bool = False
         self.load_settings()
         self.load_filters()
+        self.endpoints_file : str = ""
+
     
     def load_settings(self) -> None:
         config = configparser.ConfigParser()
 
-        if not os.path.exists('Config.ini'):
-            message = f"ConfigurationLoader: {'Config.ini'} does not exist!"
+        if not os.path.exists('Config/Config.ini'):
+            message = f"ConfigurationLoader: {'Config/Config.ini'} does not exist!"
             Logger.log_error(message)
             raise FileNotFoundError(message)
         
         else: 
-            config.read('Config.ini')
+            config.read('Config/Config.ini')
 
             self.URL = config["API_INFO"]["URL"]
             self.Username = config["API_INFO"]["Username"]
             self.Password = config["API_INFO"]["Password"]
             self.Path = config["Storage"]["Path"]
             self.Deleted = config["Storage"]["Deleted"]
-            self.SQLITE = config["Creat_Test_DB"]["SQLITE"] == "True" or config["Creat_Test_DB"]["SQLITE"] == "true"
-            self.SQLITE = config["Creat_Test_DB"]["POSTGRES"] == "True" or config["Creat_Test_DB"]["POSTGRES"] == "true"
+            self.SQLITE = config["Create_Test_DB"]["SQLITE"] == "True" or config["Create_Test_DB"]["SQLITE"] == "true"
+            self.SQLITE = config["Create_Test_DB"]["POSTGRES"] == "True" or config["Create_Test_DB"]["POSTGRES"] == "true"
+            self.endpoints_file = config["Endpoint_info"]["File"]
 
     def load_filters(self) -> None:
-        if not os.path.exists('Endpoints.csv'):
-            message = f"ConfigurationLoader: {'Endpoints.csv'} does not exist!"
+        if not os.path.exists(self.endpoints_file):
+            message = f"ConfigurationLoader: {self.endpoints_file} does not exist!"
             Logger.log_error(message)
             raise FileNotFoundError(message)
         
-        with open('Endpoints.csv', mode='r') as csvfile:
+        with open(self.endpoints_file, mode='r') as csvfile:
             csv_reader = csv.reader(csvfile,delimiter=',')
             csv_reader.__next__()
             for row in csv_reader:
