@@ -1,1 +1,7 @@
-config.ini
+Config/Config.ini
+Config.ini
+Results/
+Deleted/
+*.db
+*.bak
+Config/Config.ini
