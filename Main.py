@@ -9,7 +9,7 @@ from DatabaseCreator.POSTGRES_Creator import CSVtoSQL
 import argparse
 
 def run_with_guid():
-    application: GUI = GUI(logger, fetcher, parser, writer)
+    application: GUI = GUI(config, logger, fetcher, parser, writer)
 
 
 def run_headless():
