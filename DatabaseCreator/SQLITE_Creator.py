@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine, MetaData, Table, Column, String
 
 class CSVtoSQLite:
-    def __init__(self, database_uri='sqlite:///results.db'):
+    def __init__(self, database_uri='sqlite:///Databases/results.db') -> None:
         self.engine = create_engine(database_uri)
         self.metadata = MetaData()
 
