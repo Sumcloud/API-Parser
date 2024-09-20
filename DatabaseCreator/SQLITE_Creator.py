@@ -9,8 +9,17 @@ class CSVtoSQLite:
 
     def create_table_from_csv(self, file_path):
         table_name = os.path.splitext(os.path.basename(file_path))[0]
+
+        try:
+            df = pd.read_csv(file_path, delimiter='|', dtype=str, low_memory=False)
+        except pd.errors.EmptyDataError:
+            print(f"Warning: '{file_path}' is empty or has no data to parse. Skipping.")
+            return
+
+        if df.empty:
+            print(f"Warning: '{file_path}' has no rows of data. Skipping.")
+            return
         
-        df = pd.read_csv(file_path, delimiter='|', dtype=str, low_memory=False)
         columns = [Column(col, String) for col in df.columns]  
 
         table = Table(table_name, self.metadata, *columns)
